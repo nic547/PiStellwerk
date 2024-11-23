@@ -87,6 +87,15 @@ namespace TauStellwerk.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import Backup.
+        /// </summary>
+        public static string BackupImport {
+            get {
+                return ResourceManager.GetString("BackupImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backups.
         /// </summary>
         public static string Backups {

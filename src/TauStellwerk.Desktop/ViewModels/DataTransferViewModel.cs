@@ -80,6 +80,26 @@ public partial class DataTransferViewModel : ViewModelBase, IDisposable
         await _service.DeleteBackup(fileName);
     }
 
+    [RelayCommand]
+    private async Task ImportBackup()
+    {
+        FilePickerOpenOptions options = new()
+        {
+            AllowMultiple = false,
+            FileTypeFilter =
+            [
+                FilePickerFileTypes.All, 
+            ],
+        };
+
+        var file = await _viewService.ShowFilePicker(this, options);
+
+        if (file != null)
+        {
+            await _service.ImportBackup(file.Path);
+        }
+    }
+
     private async Task InitalLoad()
     {
         var result = await _service.GetBackups();

@@ -267,4 +267,7 @@
   <data name="BackupsDownloadTooltip" xml:space="preserve">
     <value>Datensicherung lokal speichern</value>
   </data>
+  <data name="BackupImport" xml:space="preserve">
+    <value>Datensicherung einspielen</value>
+  </data>
 </root>

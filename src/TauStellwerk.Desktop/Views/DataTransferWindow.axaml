@@ -45,6 +45,8 @@
             </ItemsControl>
             <Button Command="{Binding CreateNewBackupCommand}" Content="{x:Static r:Resources.BackupCreate}"
                     HorizontalAlignment="Right" />
+            <Button Command="{Binding ImportBackupCommand}" Content="{x:Static r:Resources.BackupImport}"
+                    HorizontalAlignment="Right" />
         </StackPanel>
     </DockPanel>
 </Window>

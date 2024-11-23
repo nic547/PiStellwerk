@@ -73,4 +73,19 @@ public class DataTransferService
 
         await connection.InvokeAsync("DeleteBackup", filename);
     }
+
+    public async Task ImportBackup(Uri filePath)
+    {
+        var httpClient = await _connectionService.TryGetHttpClient();
+        if (httpClient == null)
+        {
+            return;
+        }
+        ByteArrayContent arrayContent = new(File.ReadAllBytes(filePath.AbsolutePath));
+        MultipartFormDataContent content = new()
+        {
+            { arrayContent, "file", "backup.zip" },
+        };
+        await httpClient.PostAsync("/upload/backup", content);
+    }
 }
