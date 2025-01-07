@@ -17,6 +17,8 @@ public class DataTransferService
     {
         _connectionService = connectionService;
 
+        _connectionService.ConnectionChanged += (sender, connection) => ConnectionSetUp();
+
         ConnectionSetUp();
     }
 
