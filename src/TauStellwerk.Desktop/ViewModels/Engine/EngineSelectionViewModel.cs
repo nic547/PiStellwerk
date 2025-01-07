@@ -38,10 +38,8 @@ public partial class EngineSelectionViewModel : ViewModelBase, IDisposable
 
     public EngineSelectionViewModel(EngineService? engineService = null, IViewService? viewService = null)
     {
-        _engineService = engineService ??
-                         Locator.Current.GetService<EngineService>() ?? throw new InvalidOperationException();
-        _viewService = viewService ??
-                       Locator.Current.GetService<IViewService>() ?? throw new InvalidOperationException();
+        _engineService = engineService ?? Locator.Current.GetRequiredService<EngineService>();
+        _viewService = viewService ?? Locator.Current.GetRequiredService<IViewService>();
 
         PropertyChanged += async (o, args) => await HandlePropertyChanged(o, args);
         _engineService.EngineChanged += OnEngineChanged;

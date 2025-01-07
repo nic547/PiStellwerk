@@ -88,7 +88,7 @@ public partial class DataTransferViewModel : ViewModelBase, IDisposable
             AllowMultiple = false,
             FileTypeFilter =
             [
-                FilePickerFileTypes.All, 
+                FilePickerFileTypes.All,
             ],
         };
 
