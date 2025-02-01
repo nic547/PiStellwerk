@@ -32,7 +32,7 @@ public class CoalescingLimiterTests
 
         var timeBetweenCalls = helper.MethodCalls[1].DateTime - helper.MethodCalls[0].DateTime;
         helper.MethodCalls.Should().HaveCount(2);
-        timeBetweenCalls.Should().BeGreaterOrEqualTo(TimeSpan.FromMilliseconds(95));
+        timeBetweenCalls.Should().BeGreaterThanOrEqualTo(TimeSpan.FromMilliseconds(95));
     }
 
     [Test]
