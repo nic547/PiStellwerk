@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using FluentAssertions;
-using FluentResults.Extensions.FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -51,7 +50,7 @@ public class ConnectionHandlerTests
         await Task.Delay(10);
         var receivedCommand = Encoding.UTF8.GetString(_tcpListener.Data.ToArray());
 
-        result.Should().BeSuccess();
+        result.IsSuccess.Should().BeTrue();
         result.Value.ErrorCode.Should().Be(0);
         receivedCommand.Should().BeEquivalentTo(command);
     }
@@ -65,7 +64,7 @@ public class ConnectionHandlerTests
         await _tcpListener.Send("<END 0 (OK)>\r\n");
         var result = await task;
 
-        result.Should().BeSuccess();
+        result.IsSuccess.Should().BeTrue();
         var response = result.Value;
         response.Command.Should().Be("set(1016,func[0,1])");
         response.Content.Should().Be("ä");
@@ -100,7 +99,7 @@ public class ConnectionHandlerTests
         await _tcpListener.Send("<END 0 (OK)>\r\n");
         var result = await task;
 
-        result.Should().BeSuccess();
+        result.IsSuccess.Should().BeTrue();
         var response = result.Value;
         response.Command.Should().Be("set(1016,func[0,1])");
         response.Content.Should().Be(string.Empty);

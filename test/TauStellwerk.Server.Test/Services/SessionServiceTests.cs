@@ -2,7 +2,6 @@
 //  Licensed under the GNU GPL license. See LICENSE file in the project root for full license information.
 
 using FluentAssertions;
-using FluentResults.Extensions.FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -20,7 +19,7 @@ public class SessionServiceTests
 
         var session = sessionService.TryGetSession("Foo");
 
-        session.Should().BeSuccess();
+        session.IsSuccess.Should().BeTrue();
         session.Value.UserName.Should().Be("Alice");
         session.Value.ConnectionId.Should().Be("Foo");
     }
@@ -34,7 +33,7 @@ public class SessionServiceTests
 
         var session = sessionService.TryGetSession("Foo");
 
-        session.Should().BeFailure();
+        session.IsSuccess.Should().BeFalse();
     }
 
     [Test]

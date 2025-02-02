@@ -1,8 +1,8 @@
 ﻿// This file is part of the TauStellwerk project.
 //  Licensed under the GNU GPL license. See LICENSE file in the project root for full license information.
 
+using FluentAssertions;
 using FluentResults;
-using FluentResults.Extensions.FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -45,7 +45,7 @@ public class EngineServiceTests
 
         var result = await service.AcquireEngine(session, _engine);
 
-        result.Should().BeFailure(string.Empty);
+        result.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -56,8 +56,8 @@ public class EngineServiceTests
         var firstResult = await service.AcquireEngine(session, _engine);
         var secondResult = await service.AcquireEngine(session, _engine);
 
-        firstResult.Should().BeSuccess();
-        secondResult.Should().BeFailure();
+        firstResult.IsSuccess.Should().BeTrue();
+        secondResult.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -68,8 +68,8 @@ public class EngineServiceTests
         var acquireResult = await service.AcquireEngine(session, _engine);
         var releaseResult = await service.ReleaseEngine(session, _engine.Id);
 
-        acquireResult.Should().BeSuccess();
-        releaseResult.Should().BeSuccess();
+        acquireResult.IsSuccess.Should().BeTrue();
+        releaseResult.IsSuccess.Should().BeTrue();
     }
 
     [Test]
@@ -81,8 +81,8 @@ public class EngineServiceTests
         var firstRelease = await service.ReleaseEngine(session, _engine.Id);
         var secondRelease = await service.ReleaseEngine(session, _engine.Id);
 
-        firstRelease.Should().BeSuccess();
-        secondRelease.Should().BeFailure();
+        firstRelease.IsSuccess.Should().BeTrue();
+        secondRelease.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -95,8 +95,8 @@ public class EngineServiceTests
         var acquireResult = await service.AcquireEngine(session, _engine);
         var releaseResult = await service.ReleaseEngine(session2, _engine.Id);
 
-        acquireResult.Should().BeSuccess();
-        releaseResult.Should().BeFailure();
+        acquireResult.IsSuccess.Should().BeTrue();
+        releaseResult.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -108,9 +108,9 @@ public class EngineServiceTests
         var releaseResult = await service.ReleaseEngine(session, _engine.Id);
         var reacquireResult = await service.AcquireEngine(session, _engine);
 
-        acquireResult.Should().BeSuccess();
-        releaseResult.Should().BeSuccess();
-        reacquireResult.Should().BeSuccess();
+        acquireResult.IsSuccess.Should().BeTrue();
+        releaseResult.IsSuccess.Should().BeTrue();
+        reacquireResult.IsSuccess.Should().BeTrue();
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class EngineServiceTests
 
         var speedResult = await service.SetEngineSpeed(session, 1, 100, null);
 
-        speedResult.Should().BeFailure();
+        speedResult.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -131,7 +131,7 @@ public class EngineServiceTests
         _ = await service.AcquireEngine(session, _engine);
         var speedResult = await service.SetEngineSpeed(session, 1, 100, null);
 
-        speedResult.Should().BeSuccess();
+        speedResult.IsSuccess.Should().BeTrue();
     }
 
     [Test]
@@ -143,7 +143,7 @@ public class EngineServiceTests
         await service.AcquireEngine(session, _engine);
         var speedResult = await service.SetEngineSpeed(session2, 1, 100, null);
 
-        speedResult.Should().BeFailure();
+        speedResult.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -153,7 +153,7 @@ public class EngineServiceTests
 
         var functionResult = await service.SetEngineFunction(session, 1, 2, State.Off);
 
-        functionResult.Should().BeFailure();
+        functionResult.IsSuccess.Should().BeFalse();
     }
 
     [Test]
@@ -164,7 +164,7 @@ public class EngineServiceTests
         await service.AcquireEngine(session, _engine);
         var functionResult = await service.SetEngineFunction(session, 1, 0, State.On);
 
-        functionResult.Should().BeSuccess();
+        functionResult.IsSuccess.Should().BeTrue();
     }
 
     [Test]
@@ -176,7 +176,7 @@ public class EngineServiceTests
         await service.AcquireEngine(session, _engine);
         var functionResult = await service.SetEngineFunction(session2, 1, 10, State.On);
 
-        functionResult.Should().BeFailure();
+        functionResult.IsSuccess.Should().BeFalse();
     }
 
     private static (Server.Services.EngineControlService.EngineControlService EngineService, Session Session) PrepareEngineService(CommandStationBase? mock = null)
