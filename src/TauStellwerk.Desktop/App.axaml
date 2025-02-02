@@ -2,11 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:TauStellwerk.Desktop.ViewModels"
              x:Class="TauStellwerk.Desktop.App"
-             RequestedThemeVariant="{Binding ThemeMode}">
+             RequestedThemeVariant="{Binding ThemeMode}"
+             xmlns:semi="https://irihi.tech/semi">
     <Design.DataContext>
         <viewModels:MainWindowViewModel />
     </Design.DataContext>
     <Application.Styles>
-        <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
+        <semi:SemiTheme />
     </Application.Styles>
 </Application>
