@@ -23,6 +23,7 @@ public class TransferService(
 {
     private static readonly string BackupPrefix = "TauStellwerk-Backup-";
     private readonly IDateTimeProvider _nowProvider = nowProvider ?? new DateTimeProvider();
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new();
 
     public async Task ExportEverything()
     {
@@ -89,7 +90,7 @@ public class TransferService(
         {
             foreach (var turnout in turnoutEnumereable)
             {
-                await writer.WriteLineAsync(JsonSerializer.Serialize(turnout, new JsonSerializerOptions() { }));
+                await writer.WriteLineAsync(JsonSerializer.Serialize(turnout, _jsonSerializerOptions));
             }
         }
     }
@@ -104,7 +105,7 @@ public class TransferService(
         {
             foreach (var engine in engineEnumereable)
             {
-                await writer.WriteLineAsync(JsonSerializer.Serialize(engine, new JsonSerializerOptions() { }));
+                await writer.WriteLineAsync(JsonSerializer.Serialize(engine, _jsonSerializerOptions));
             }
         }
     }

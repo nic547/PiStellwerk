@@ -20,7 +20,7 @@ public class TransferServiceTests : ContextTestBase
 {
     private readonly TauStellwerkOptions _defaultOptions = new();
 
-    private readonly IDateTimeProvider _dateTimeProvider = new FakeDateTimeProvider();
+    private readonly FakeDateTimeProvider _dateTimeProvider = new();
 
     [SetUp]
     public void TransferSetup()
